@@ -8,18 +8,18 @@ CHANNEL_LINK = "https://t.me/minesaipredictor"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton("Получить прогноз", callback_data="get_prediction")],
-        [InlineKeyboardButton("Канал с прогнозами", url=CHANNEL_LINK)],
-        [InlineKeyboardButton("Перейти на BC Game", url=REF_LINK)]
+        [InlineKeyboardButton("🔥 Получить прогноз", callback_data="get_prediction")],
+        [InlineKeyboardButton("📡 Канал с прогнозами", url=CHANNEL_LINK)],
+        [InlineKeyboardButton("🎰 Перейти на BC Game", url=REF_LINK)]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     text = (
-        "👋 Привет! Я — твой помощник по AI-прогнозам для игры Mines.\n\n"
+        "👋 Привет! Я — AI-бот с прогнозами для игры *Mines*.\n\n"
         "🔮 Получи точный прогноз и начни зарабатывать прямо сейчас!\n\n"
-        "⚠️ Чтобы получить доступ к прогнозу — зарегистрируйся на BC Game:"
-        f"\n👉 {REF_LINK}"
+        "⚠️ Чтобы получить доступ — сначала зарегистрируйся на BC Game:\n"
+        f"[👉 Зарегистрироваться]({REF_LINK})"
     )
-    await update.message.reply_text(text, reply_markup=reply_markup)
+    await update.message.reply_text(text, reply_markup=reply_markup, parse_mode="Markdown")
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -27,7 +27,11 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if query.data == "get_prediction":
         await query.edit_message_text(
-            "⚠️ Чтобы получить прогноз — зарегистрируйся:\n" + REF_LINK
+            text=(
+                "🚫 Чтобы получить прогноз — нужно зарегистрироваться:\n"
+                f"[👉 Регистрация на BC Game]({REF_LINK})"
+            ),
+            parse_mode="Markdown"
         )
 
 app = ApplicationBuilder().token(TOKEN).build()
